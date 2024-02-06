@@ -3,6 +3,13 @@ query NextLaunch {
     id
     mission_name
     launch_date_unix
+    launch_date_local
+    ... @defer {
+      links {
+        __typename
+        reddit_campaign
+      }
+    }
     launch_site {
       site_name
     }
@@ -14,9 +21,16 @@ query LaunchDetail($id: ID!) {
     id
     mission_name
     details
-    rocket {
-      rocket_name
-      rocket_type
+    ... @defer {
+      rocket {
+        rocket_name
+        rocket_type
+        first_stage {
+          cores {
+            land_success
+          }
+        }
+      }
     }
     launch_date_unix
     launch_success
